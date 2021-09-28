@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package com.example.grpc.proto;
+
+message LoanBalanceRequest {
+	int32 loanAccountNumber = 1;
+}
+
+message LoanBalanceResponse {
+	double loanBalanceAmount = 1;
+}
+
+message LoanPaymentHistoryRequest {
+	int32 loanAccountNumer = 1;
+}
+
+message LoanPaymentHistoryReponse {
+	double loanAmount = 1;
+}
+
+message LoanPaymentRequest {
+	int32 loanAccount = 1;
+	double loanAmount = 2;
+}
+
+message LoanPaymentResponse {
+	string message = 1;
+}
+
+service LoanService {
+
+    //unary
+	rpc getLoanBalance (LoanBalanceRequest) returns (LoanBalanceResponse);
+
+	//server side stream
+	rpc getLoanPaymentHistory (LoanPaymentHistoryRequest) returns (stream
+	LoanPaymentHistoryReponse);
+
+	//client side stream
+	rpc payments (stream LoanPaymentRequest) returns (LoanPaymentResponse);
+}
